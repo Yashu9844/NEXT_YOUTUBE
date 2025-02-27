@@ -5,7 +5,7 @@ import { PersonalSection } from "./personnel-section"
 
 export const HomeSidebar=()=>{
     return(
-        <Sidebar className="pt-16 z-40 border-none bg-red-500">
+        <Sidebar className="pt-16 z-40 border-none bg-red-500" collapsible="icon">
             <SidebarContent className="bg-background">
                 <MainSection/>
                 <Separator/>

@@ -1,11 +1,21 @@
 
-import Image from "next/image";
 
-const Home = () => {
+import PageClient from "@/client/page";
+import { HydrateClient, trpc } from "@/trpc/server";
+import { ErrorBoundary } from "react-error-boundary";
+import { Suspense } from "react";
+
+const Home = async () => {
+
+  void trpc.hello.prefetch({text:"yrp"})
   return (
-   <div className="">
-    I will Load the vidoes whrn i work on it
-   </div>
+   <HydrateClient>
+    <Suspense fallback="loading...">
+  <ErrorBoundary fallback={<div>Something went wrong</div>}>
+        <PageClient/>
+  </ErrorBoundary>
+    </Suspense>
+   </HydrateClient>
   );
 };
 

@@ -1,6 +1,8 @@
+"use client"
 import { cn } from "@/lib/utils";
 import { Badge } from "./ui/badge";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { useEffect, useState } from "react";
 
 
 
@@ -23,11 +25,29 @@ const FilterCarousel = ({
     data,
   }: FilterCarouselProps
 ) => {
+  const [api,setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  const [count, setCount] = useState(0)
+
+    useEffect(()=>{
+        if (!api) {
+            return
+          }
+       
+          setCount(api.scrollSnapList().length)
+          setCurrent(api.selectedScrollSnap() + 1)
+
+          api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1)
+          })
+    },[api])
+
+
   return (
     <div className="relative w-full">
         <div 
         className={cn('absolute left-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none',
-            false && 'hidden'
+            current===1 && 'hidden'
         )}
         />
         <Carousel 
@@ -58,7 +78,7 @@ const FilterCarousel = ({
         </Carousel>
         <div 
         className={cn('absolute right-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none',
-            false && 'hidden'
+            current=== count && 'hidden'
         )}
         />
     </div>

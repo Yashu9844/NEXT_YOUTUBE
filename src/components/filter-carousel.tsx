@@ -51,6 +51,7 @@ const FilterCarousel = ({
         )}
         />
         <Carousel 
+        setApi={setApi}
         opts={{
             dragFree: true,
             align:"start"

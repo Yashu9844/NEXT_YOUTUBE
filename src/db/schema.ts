@@ -1,6 +1,7 @@
 
+import { relations } from "drizzle-orm";
 import { pgTable ,text,timestamp,uniqueIndex,uuid} from "drizzle-orm/pg-core";
-import { title } from "process";
+
 
 
 
@@ -14,9 +15,11 @@ export const users = pgTable("users",{
 
 
 },(t)=>[uniqueIndex("clerk_id_idx").on(t.clerkId)]
-
-
 )
+
+export const userRelations = relations(users,({many})=>({
+    videos:many(videos)
+}))
 
 
 export const categories = pgTable("categories",{
@@ -37,3 +40,11 @@ export const videos = pgTable('videos',{
 
 
 })
+
+
+export const videoRelations = relations(videos,({one})=>({
+    user:one(users,{
+        fields:[videos.userId],
+        references:[users.id]
+    })
+}))

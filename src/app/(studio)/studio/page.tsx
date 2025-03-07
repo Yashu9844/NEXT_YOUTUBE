@@ -1,8 +1,13 @@
-const Page = () => {
+import { HydrateClient, trpc } from "@/trpc/server";
+import StudioView from "./ui/view/studio-view";
+
+const Page =async () => {
+ 
+ void trpc.studio.getMany.prefetchInfinite({limit: 5})
   return (
-    <div>
-      Page
-    </div>
+    <HydrateClient>
+      <StudioView />
+    </HydrateClient>
   );
 };
 

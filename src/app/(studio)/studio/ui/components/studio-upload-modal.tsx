@@ -1,8 +1,13 @@
+"use client"
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "lucide-react";
+
 const StudioUploadModal = () => {
   return (
-    <div>
-      StudioUploadModal
-    </div>
+    <Button variant={"secondary"}>
+      <PlusIcon/>
+      Create
+    </Button>
   );
 };
 

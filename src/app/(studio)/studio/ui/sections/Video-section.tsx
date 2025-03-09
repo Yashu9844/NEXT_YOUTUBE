@@ -1,8 +1,21 @@
 "use client"
 
 import { trpc } from "@/trpc/client";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-const VideoSection = () => {
+
+export const VideoSection = () => {
+  return(
+    <Suspense>
+      <ErrorBoundary fallback={<p>Error..</p>}>
+      <VideoSectionSuspense/></ErrorBoundary>
+    </Suspense>
+  )
+}
+
+
+const VideoSectionSuspense = () => {
 
  const [data] = trpc.studio.getMany.useSuspenseInfiniteQuery({limit:5},{
      getNextPageParam:(lastPage)=>lastPage.nextCursor,
@@ -15,4 +28,4 @@ const VideoSection = () => {
   );
 };
 
-export default VideoSection;
+export default VideoSectionSuspense;

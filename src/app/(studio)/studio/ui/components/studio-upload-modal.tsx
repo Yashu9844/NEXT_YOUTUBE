@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { Loader2Icon, PlusIcon } from "lucide-react";
 import { toast } from "sonner";
+import StudioUploader from "./studio-uploader";
 
 const StudioUploadModal = () => {
   const utils = trpc.useUtils()
@@ -22,11 +23,18 @@ const StudioUploadModal = () => {
   <>
       <ResponisveModal
       title="upload the video"
-      open={!!create.data}
+      open={!!create.data?.url}
       onOpenChange={()=>create.reset()}
       
       >
-        asdnansdl
+       {create.data?.url  ? <StudioUploader
+       endpoint={create.data.url}
+         onSuccess={()=>{}}
+
+
+       /> : <Loader2Icon/>}
+       
+
       </ResponisveModal>
 
 

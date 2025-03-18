@@ -41,13 +41,20 @@ const VideoSectionSuspense = () => {
         </TableHeader>
         <TableBody>
         {videos?.pages.flatMap((page) => page.items).map((video) => (
+          <Link href={`/studio/videos/${video.id}`} legacyBehavior>
               <TableRow
                 key={video.id}
                 className="cursor-pointer"
                 onClick={() => window.location.href = `/studio/videos/${video.id}`}
               >
                 <TableCell>{video.title}</TableCell>
-              </TableRow>
+                <TableCell>visibility</TableCell>
+                <TableCell>status</TableCell>
+                <TableCell>datae</TableCell>
+                <TableCell>views</TableCell>
+                <TableCell>comments</TableCell>
+                <TableCell>likes</TableCell>
+              </TableRow></Link>
             ))}
         </TableBody>
       </Table>

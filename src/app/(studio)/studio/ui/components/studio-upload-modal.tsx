@@ -1,4 +1,5 @@
 "use client"
+import ResponisveModal from "@/components/responisve-dialog";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { Loader2Icon, PlusIcon } from "lucide-react";
@@ -18,10 +19,21 @@ const StudioUploadModal = () => {
   });
 
   return (
+  <>
+      <ResponisveModal
+      title="upload the video"
+      open={!!create.data}
+      onOpenChange={()=>create.reset()}
+      
+      >
+        asdnansdl
+      </ResponisveModal>
+
+
     <Button variant={"secondary"} onClick={()=>create.mutate()} disabled={create.isPending}>
 {create.isPending?<Loader2Icon className="animate-spin"/>:<PlusIcon/>}
       Create
-    </Button>
+    </Button></>
   );
 };
 

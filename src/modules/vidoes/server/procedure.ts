@@ -14,7 +14,7 @@ export const videosRouter = createTRPCRouter({
     new_asset_settings:{
         passthrough:userId,
         playback_policy:['public'],
-        mp4_support:'standard'
+        
     },
     cors_origin:'*' // set ypoui url in production
  })
@@ -23,7 +23,9 @@ export const videosRouter = createTRPCRouter({
         const [video] = await db.insert(videos).values(
             {
                 userId,
-                title:'Untitled'
+                title:'Untitled',
+                muxStatus:'waiting',
+                muxAssetId:upload.id,
             }
         )
 

@@ -14,7 +14,7 @@ const StudioUploader = (
 ) => {
   return (
     <div>
-      <MuxUploader/>
+      <MuxUploader endpoint={endpoint}/>
     </div>
   );
 };

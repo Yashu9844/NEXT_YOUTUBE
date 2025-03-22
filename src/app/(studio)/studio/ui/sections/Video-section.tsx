@@ -2,6 +2,7 @@
 
 import InfinteScroll from "@/components/scroll-infinte";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import VideoThumbnail from "@/modules/vidoes/ui/components/video-thumbnail";
 import { trpc } from "@/trpc/client";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -47,7 +48,12 @@ const VideoSectionSuspense = () => {
                 className="cursor-pointer"
                 onClick={() => window.location.href = `/studio/videos/${video.id}`}
               >
-                <TableCell>{video.title}</TableCell>
+                <TableCell><div className="flex items-center gap-4">
+                  <div className="relative w-36 shrink-0 aspect-video">
+                    <VideoThumbnail imageUrl={video.thumbnailUrl}/>
+                  </div>
+                  
+                  </div></TableCell>
                 <TableCell>visibility</TableCell>
                 <TableCell>status</TableCell>
                 <TableCell>datae</TableCell>

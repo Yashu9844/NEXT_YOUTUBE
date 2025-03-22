@@ -45,6 +45,7 @@ export const videos = pgTable('videos',{
     muxTrackId:text('mux_track_id').unique(),
     muxTrackStatus:text('mux_track_status'),
     thumbnailUrl:text('thumbnail_url'),
+    previewUrl:text('preview_url'),
     userId:uuid('user_id').references(()=>users.id,{onDelete:'cascade'}).notNull(),
     categoryId:uuid('category_id').references(()=>categories.id,{onDelete:'set null'}),
     createdAt:timestamp("created_at").defaultNow().notNull(),

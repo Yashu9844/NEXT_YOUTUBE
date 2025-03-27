@@ -89,7 +89,7 @@ export const POST = async(request:Request)=>{
             await db
             .update(videos)
             .set({
-                muxAssetId:data.id,
+                muxAssetId: data.id,
                 muxStatus: data.status,
                 muxPlaybackId: playbackId,
                 thumbnailUrl,

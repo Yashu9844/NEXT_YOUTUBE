@@ -145,7 +145,7 @@ export const POST = async(request:Request)=>{
                 return new Response('No asset id found',{status:400});
     
         }
-
+ 
         const status = data.status;
         const trackId = data.id;
         const assestId = data.asset_id;
@@ -155,7 +155,7 @@ export const POST = async(request:Request)=>{
             muxTrackStatus: status
         })
         .where(eq(videos.muxAssetId,assestId));
-
+               console.log("done reading");
         break;
 
         }

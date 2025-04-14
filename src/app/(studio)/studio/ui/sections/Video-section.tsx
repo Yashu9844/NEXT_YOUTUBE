@@ -1,29 +1,72 @@
 "use client";
 
 import InfinteScroll from "@/components/scroll-infinte";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { snakeCaseToTitle } from "@/lib/utils";
 import VideoThumbnail from "@/modules/vidoes/ui/components/video-thumbnail";
 import { trpc } from "@/trpc/client";
 import { formatDate } from "date-fns";
+import { Globe2Icon, LockIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 export const VideoSection = () => {
   return (
-    <Suspense>
-      <ErrorBoundary fallback={<p>Error..</p>}>
+    <Suspense fallback={<VideoSectionSkeleton/>}>
+      <ErrorBoundary fallback={<p>Error</p>} >
         <VideoSectionSuspense />
       </ErrorBoundary>
     </Suspense>
   );
 };
 
+const VideoSectionSkeleton=()=>{
+  return (
+  
+            <div className="border-y">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="pl-6 w-[510px]">Video</TableHead>
+            <TableHead className="w-[120px] text-left">Visibility</TableHead>
+            <TableHead className="w-[120px] text-left">Status</TableHead>
+            <TableHead className="w-[150px] text-left">Date</TableHead>
+            <TableHead className="w-[100px] text-right">Views</TableHead>
+            <TableHead className="w-[120px] text-right">Comments</TableHead>
+            <TableHead className="w-[100px] text-right pr-6">Likes</TableHead>
+          </TableRow>
+        </TableHeader>
+
+<TableBody>
+    {Array.from({ length: 5 }).map((_, index) => (
+      <TableRow key={index}>
+        <TableCell className="pl-6">
+         <div className="flex items-center gap-4">
+         <Skeleton className="h-36 w-36" />
+         <div className="h-20 w-36">
+            <Skeleton className="h-4 w-[100px]" />
+            <Skeleton className="h-4 w-[150px]" />
+         </div>
+         </div>
+        </TableCell>
+      </TableRow>
+    ))}
+
+</TableBody>
+      </Table>
+    </div>
+
+  )
+}
+
+
 const VideoSectionSuspense = () => {
   const [videos, query] = trpc.studio.getMany.useSuspenseInfiniteQuery({ limit: 5 }, {
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
+
 
   return (
     <div>
@@ -67,7 +110,18 @@ const VideoSectionSuspense = () => {
                   </TableCell>
 
                   {/* Visibility */}
-                  <TableCell className="w-[120px] text-left">{video.visibility}</TableCell>
+                  <TableCell className="w-[120px] text-left ">
+                 <div className="flex items-center">
+                 {
+                      video.visibility === 'private' ? (
+                        <LockIcon className="size-4 mr-2"/>
+                      ) : (
+                        <Globe2Icon className="size-4 mr-2"/>
+                      )
+                    }
+                    
+                    
+                    {snakeCaseToTitle(video.visibility)}</div></TableCell>
 
                   {/* Status */}
                   <TableCell className="w-[120px] text-left">

@@ -15,6 +15,7 @@ export const studioRouter = createTRPCRouter({
     if(!video) {
       throw new Error("Video not found");
     }
+  return video;
   }),
   getMany: protectedProcedure
     .input(

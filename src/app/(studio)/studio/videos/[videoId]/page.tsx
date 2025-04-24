@@ -15,6 +15,7 @@ const Page =async ({params}:PageProps) => {
 
    void trpc.studio.getOne.prefetch({id:videoId})
 
+   
   return (
     <HydrateClient>
       <VideoView videoId={videoId} />

@@ -48,6 +48,7 @@ const update = trpc.videos.update.useMutation({
   onSuccess: () => {
     utils.studio.getMany.invalidate();
     utils.studio.getOne.invalidate({ id: videoId });
+    toast.success("Video details updated successfully");
   },
   onError: (error) => {
     toast.error("Something went wrong");

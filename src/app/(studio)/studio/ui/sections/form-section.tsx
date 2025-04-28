@@ -15,6 +15,7 @@ import { MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 interface FormSectionProps {
@@ -40,10 +41,18 @@ const FormSectionSkeleton = () => {
 }
 
 const FormSectionSuspense = ({videoId}:FormSectionProps) => {
-
+const utils = trpc.useUtils();
 const [video] = trpc.studio.getOne.useSuspenseQuery({id: videoId});
 const [categories] = trpc.categories.getMany.useSuspenseQuery();
-
+const update = trpc.videos.update.useMutation({
+  onSuccess: () => {
+    utils.studio.getMany.invalidate();
+    utils.studio.getOne.invalidate({ id: videoId });
+  },
+  onError: (error) => {
+    toast.error("Something went wrong");
+  },
+})
 
 console.log(video);
 
@@ -54,8 +63,8 @@ const form = useForm<z.infer<typeof videoUpdateSchema>>({
 
 
 })
-const onSubmit =async (data:z.infer<typeof videoUpdateSchema>)=>{
-  console.log(data)
+const onSubmit = (data:z.infer<typeof videoUpdateSchema>)=>{
+  update.mutateAsync(data);
 }
 
   return (
@@ -67,7 +76,7 @@ const onSubmit =async (data:z.infer<typeof videoUpdateSchema>)=>{
         <p className="text-sm text-muted-foreground">Manage your video details</p>
       </div>
       <div className="flex items-center gap-x-2">
- <Button type="submit" disabled={false}>
+ <Button type="submit" disabled={update.isPending}>
 Save
  </Button>
  <DropdownMenu>
@@ -142,9 +151,11 @@ Save
          </SelectTrigger>
          </FormControl> 
          <SelectContent>
-          <SelectItem value="something">
-            Something
-          </SelectItem>
+         {categories.map((category)=>(
+           <SelectItem key={category.id} value={category.id}>
+           {category.name}
+         </SelectItem>
+         ))}
          </SelectContent>
        </Select>
         <FormMessage/>

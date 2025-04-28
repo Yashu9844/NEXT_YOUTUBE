@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { videoCreateSchema, videoUpdateSchema } from "@/db/schema";
+import VideoPlayer from "@/modules/vidoes/ui/components/video-player";
 import { trpc } from "@/trpc/client";
 import { DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 
@@ -166,6 +167,19 @@ Save
        
        
       </div>
+      
+ <div className="flex flex-col gap-y-8 lg:col-span-2">
+  <div className="flex flex-col gap-4 bg-[#F9F9F9] rounded-xl overflow-hidden h-fit">
+    <div className="assspect-video overflow-hidden relative">
+      <VideoPlayer
+      playbackId={video.muxPlaybackId}
+      thumbnailUrl={video.thumbnailUrl}
+      />
+    </div>
+  </div>
+ </div>
+
+
     </div>
       </form>
     </Form>

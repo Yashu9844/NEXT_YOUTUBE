@@ -12,7 +12,8 @@ const VideoPlayer = ({playbackId,thumbnailUrl,autoPlay,onPlay}:VideoPlayerProps)
 if(!playbackId){
     return null;
 }
-    
+
+
   return (
     <div>
       VideoPlayar

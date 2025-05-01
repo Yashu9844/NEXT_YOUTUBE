@@ -16,7 +16,7 @@ if(!playbackId){
 
   return (
     <div>
-      VideoPlayar
+       VideoPlayar
     </div>
   );
 };
